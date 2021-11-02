@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&display=swap" rel="stylesheet">
+    <meta property="og:title" content="システム管理者ジェネレーター">
+    <meta property="og:description" content="システム管理者構文を簡単に生成出来ます">
+    <meta property="og:image" content="https://code-raisan.github.io/B1u3-Syntax/img/ogp.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:site_name" content="システム管理者ジェネレーター">
+    <title>システム管理者ジェネレーター</title>
+</head>
+<body>
+    <main class="container">
+        <section>
+            <h1>システム管理者ジェネレーター</h1>
+        </section>
+        <section style="margin-top: 25px;">
+            <div class="form_container" id="text_2_con">
+                <label for="text_4" class="form-label">管理者</label>
+                <input type="text" id="text_4" class="form-control" value="システム">
+            </div>
+            <div class="form_container">
+                <label for="text_1" class="form-label">要約その1</label>
+                <input type="text" id="text_1" class="form-control">
+            </div>
+            <div class="form_container">
+                <label for="text_2" class="form-label">要約その2</label>
+                <input type="text" id="text_2" class="form-control">
+            </div>
+            <div class="form_container" id="text_2_con">
+                <label for="text_3" class="form-label">要約その3</label>
+                <input type="text" id="text_3" class="form-control">
+            </div>
+            <button id="btn" class="btn btn-primary" style="margin-top: 10px;">生成</button>
+        </section>
+        <section style="margin-top: 30px;">
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" style="height: 200px" id="result" disabled></textarea>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example" style="margin-top: 10px; width: 100%;">
+                <button type="button" class="btn btn-primary" id="copy">Copy</button>
+                <button type="button" class="btn btn-primary" id="tweet">Tweetする</button>
+            </div>
+        </section>
+    </main>
+    <style>
+        *{
+            font-family: "Kaisei Decol", serif;
+        }
+
+        .container{
+            margin-top: 50px;
+        }
+
+        .form_container{
+            margin-top: 10px;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    </style>
+    <script>
+        const text_1 = document.getElementById("text_1");
+        const text_2 = document.getElementById("text_2");
+        const text_3 = document.getElementById("text_3");
+        const text_4 = document.getElementById("text_4");
+        const btn = document.getElementById("btn");
+        const result = document.getElementById("result");
+        const copy = document.getElementById("copy");
+        const tweet = document.getElementById("tweet");
+
+        btn.onclick = () => {
+            if(text_1.value != "" && text_2.value != "" && text_3.value != ""){
+                let template = `あなたは${text_4.value}の管理者から通常の講習を受けたはずです。\nこれは通常、以下の3点に要約されます:\n\n    #1) ${text_1.value}\n    #2) ${text_2.value}\n    #3) ${text_3.value}`;
+                result.innerHTML = template;
+            }else{
+                alert("すべての項目に入力してください");
+            }
+        }
+
+        copy.onclick = () =>{
+            if(result.value != ""){
+                navigator.clipboard.writeText(result.value)
+                .then(e => {
+                    alert("コピーしました");
+                });
+            }
+        }
+
+        tweet.onclick = () =>{
+            if(result.value != ""){
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(result.value + "\n\n#システム管理者ジェネレーター\n" + window.location)}`);
+            }
+        }
+    </script>
+</body>
+</html>
